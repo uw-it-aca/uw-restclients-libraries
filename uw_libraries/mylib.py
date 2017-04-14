@@ -6,17 +6,15 @@ from uw_libraries.dao import MyLib_DAO
 from uw_libraries.models import MyLibAccount
 from restclients_core.exceptions import DataFailureException
 from datetime import datetime
-import logging
+from logging import getLogger
 import json
 
 
-INVALID_USER_MSG = "User not found"
-RESPONSE_STYLES = ['html', 'json']
-url_prefix = "/mylibinfo/v1/?id="
-logger = logging.getLogger(__name__)
+mylib_url_prefix = '/mylibinfo/v1/'
+logger = getLogger(__name__)
 
 
-def get_resource(url):
+def _get_mylib_resource(url):
     response = MyLib_DAO().getURL(url, {})
     logger.info("%s ==status==> %s" % (url, response.status))
 
@@ -24,11 +22,23 @@ def get_resource(url):
         raise DataFailureException(url, response.status, response.data)
 
     # 'Bug' with lib API causing requests with no/invalid user to return a 200
-    if INVALID_USER_MSG in response.data:
+    if "User not found" in response.data:
         raise DataFailureException(url, 404, response.data)
 
     logger.debug("%s ==data==> %s" % (url, response.data))
     return response.data
+
+
+def _get_account(netid, timestamp=None, is_html=False):
+    url = "%s?id=%s" % (mylib_url_prefix, netid)
+
+    if timestamp is not None:
+        url += "&timestamp=%s" % timestamp
+
+    if is_html:
+        url += "&style=html"
+
+    return _get_mylib_resource(url)
 
 
 def get_account(netid, timestamp=None):
@@ -36,7 +46,7 @@ def get_account(netid, timestamp=None):
     The Libraries object has a method for getting information
     about a user's library account
     """
-    response = _get_resource(netid, timestamp=timestamp)
+    response = _get_account(netid, timestamp=timestamp)
     return _account_from_json(response)
 
 
@@ -45,20 +55,7 @@ def get_account_html(netid, timestamp=None):
     The Libraries object has a method for getting information
     about a user's library account
     """
-    return _get_resource(netid, timestamp=timestamp, style='html')
-
-
-def _get_resource(netid, timestamp=None, style=None):
-    """
-    Return an Account object for the given netid
-    """
-    url = "%s%s" % (url_prefix, netid)
-    if timestamp is not None:
-        url += "&timestamp=" + str(timestamp)
-
-    if style is not None:
-        url += "&style=" + style
-    return get_resource(url)
+    return _get_account(netid, timestamp=timestamp, is_html=True)
 
 
 def _account_from_json(body):
