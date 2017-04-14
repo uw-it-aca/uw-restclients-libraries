@@ -20,4 +20,3 @@ class SubjectGuide_DAO(DAO):
 
     def service_mock_paths(self):
         return [abspath(os.path.join(dirname(__file__), "resources"))]
-
