@@ -34,12 +34,11 @@ def get_subject_guide_for_section_params(
     headers = {'Accept': 'application/json'}
 
     response = SubjectGuide_DAO().getURL(url, headers)
-
+    response_data = str(response.data)
     if response.status != 200:
-        raise DataFailureException(url, response.status, response.data)
+        raise DataFailureException(url, response.status, response_data)
 
-    data = json.loads(response.data)
-    return _subject_guide_from_json(data)
+    return _subject_guide_from_json(json.loads(response.data))
 
 
 def get_subject_guide_for_section(section):

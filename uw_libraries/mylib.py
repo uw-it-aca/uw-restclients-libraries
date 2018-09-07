@@ -2,12 +2,13 @@
 This is the interface for interacting with the UW Libraries Web Service.
 """
 
+from datetime import datetime
+import json
+from logging import getLogger
+from dateutil.parser import parse
 from uw_libraries.dao import MyLib_DAO
 from uw_libraries.models import MyLibAccount
 from restclients_core.exceptions import DataFailureException
-from datetime import datetime
-from logging import getLogger
-import json
 
 
 mylib_url_prefix = '/mylibinfo/v1/'
@@ -16,16 +17,16 @@ logger = getLogger(__name__)
 
 def _get_mylib_resource(url):
     response = MyLib_DAO().getURL(url, {})
-    logger.info("%s ==status==> %s" % (url, response.status))
 
+    response_data = str(response.data)
     if response.status != 200:
-        raise DataFailureException(url, response.status, response.data)
+        raise DataFailureException(url, response.status, response_data)
 
     # 'Bug' with lib API causing requests with no/invalid user to return a 200
-    if "User not found" in response.data:
-        raise DataFailureException(url, 404, response.data)
+    if "User not found" in response_data:
+        raise DataFailureException(url, 404, response_data)
 
-    logger.debug("%s ==data==> %s" % (url, response.data))
+    logger.debug("%s ==data==> %s" % (url, response_data))
     return response.data
 
 
@@ -62,8 +63,9 @@ def _account_from_json(body):
     try:
         account_data = json.loads(body)
     except Exception as ex:
-        raise Exception("Unable to parse library data: %s.  Exception: %s" % (
-            body, ex))
+        raise Exception(
+            "Unable to parse library data: {}.  Exception: {}".format(
+                body, str(ex)))
     account = MyLibAccount()
     account.fines = account_data["fines"]
     account.holds_ready = account_data["holds_ready"]
@@ -71,6 +73,5 @@ def _account_from_json(body):
     if account_data.get("next_due") is None:
         account.next_due = None
     else:
-        account.next_due = datetime.strptime(account_data["next_due"],
-                                             "%Y-%m-%d").date()
+        account.next_due = parse(account_data["next_due"]).date()
     return account
