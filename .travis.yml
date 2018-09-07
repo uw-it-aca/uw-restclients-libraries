@@ -1,19 +1,16 @@
 sudo: false
 language: python
 python:
-- '2.7'
-- '3.4'
-- '3.5'
 - '3.6'
 before_script:
 - pip install -e .
-- pip install pep8
+- pip install pycodestyle
 - pip install nose2
 - pip install coverage
 - pip install commonconf
 - pip install python-coveralls
 script:
-- pep8 --exclude=uw_libraries/tests uw_libraries
+- pycodestyle --exclude=uw_libraries/tests uw_libraries
 - coverage run uw_libraries/test.py -v
 after_script:
 - coveralls
@@ -28,4 +25,4 @@ deploy:
     secure: BpVDcvhy5YufXEc7MPpJMlM12fROizbW8an53HTPYj6TKkCJuuSoJeQW1Xonmh8nggYaz6U3KrP+NQWn7NvywhFpojCN8t5TZCx0V1rw3WfIH7PXx1xvoStl2Wh41Rc89iyDj+kVKHSWxsLI9bjgh2wc1MxeMn6xkkptzfepzbRD5I8gxRsXu4+JSTMTp3y96tEQ9CIiK1KMI/h9zgHPwhq3r4J2e67EB8e+hTY7xvBym34xNeGkP6kY3u0M+Log28QKuFdYhJQnXs7sWqAUpGWDnbxxeSj5vjfG29qTmlaRo0o0xPd9U9iis8oNWW+UaiONV15V9r6eacYYU7OxgpHo+ozKK7EUEvqGwTTavenLBJZYRPKeSxgCLV4jjPV7SYs9xDm4xoFLXrFnMastIPBAvl7MZ5dkih8QBCF+gqUq2GVpZJeTf/ac3z31d+E/PeCa3U720aPTqtOM/Fn/VBp/91f82WZwQpJ1mqGflv0mP8+z9Bm70hWvNQsvwt48iO7gr35QybUhGIwmQYJfm6wbypeQ5boMvR18hHzwRHwlGnEyy4/WXYcR+UZP1kfNKk4VfhOMTb2Tqh4SUJvGutn6zWKIFIvpvkVj1RwuHCa5Qwh5dBHS7tLXwOH7k/fi/qVQoW3cLOyH5fXo9TypAncRXkwBxZoc0q72eBMeobk=
   on:
     tags: true
-    condition: "$TRAVIS_PYTHON_VERSION = '3.5'"
+    python: '3.6'

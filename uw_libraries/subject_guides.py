@@ -3,15 +3,12 @@ This is the interface for interacting with the UW Libraries Subject Guide
 Web Service.
 """
 
+import json
+from urllib.parse import quote
+from restclients_core.exceptions import DataFailureException
 from uw_libraries.dao import SubjectGuide_DAO
 from uw_libraries.models import (
     SubjectGuide, CourseGuide, Library, Librarian)
-from restclients_core.exceptions import DataFailureException
-try:
-    from urllib import quote
-except ImportError:
-    from urllib.parse import quote
-import json
 
 
 subject_guide_url_prefix = '/currics_db/api/v1/data'
@@ -37,12 +34,11 @@ def get_subject_guide_for_section_params(
     headers = {'Accept': 'application/json'}
 
     response = SubjectGuide_DAO().getURL(url, headers)
-
+    response_data = str(response.data)
     if response.status != 200:
-        raise DataFailureException(url, response.status, response.data)
+        raise DataFailureException(url, response.status, response_data)
 
-    data = json.loads(response.data)
-    return _subject_guide_from_json(data)
+    return _subject_guide_from_json(json.loads(response.data))
 
 
 def get_subject_guide_for_section(section):
