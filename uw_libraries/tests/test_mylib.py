@@ -48,5 +48,4 @@ class MyLibInfoTest(TestCase):
 
     def test_with_timestamp(self):
         response = get_account_html('javerage', timestamp=1391122522900)
-        print(response)
         self.assertEquals(response, b'<p>You have 7 items checked out.<br>\n You have items due back on 2014-04-29.<br>\n You don\'t owe any fines.</p>\n <a href="http://alliance-primo.hosted.exlibrisgroup.com/primo_library/libweb/action/dlBasketGet.do?vid=UW&amp;redirectTo=myAccount">Go to your account</a>')
