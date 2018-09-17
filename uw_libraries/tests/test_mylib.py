@@ -7,13 +7,6 @@ from datetime import date
 
 @fdao_mylib_override
 class MyLibInfoTest(TestCase):
-    DEFAULT_HTML = (
-        b'<p>You have 7 items checked out.<br>\nYou have items '
-        b'due back on 2014-04-29.<br>\nYou don\'t owe any fines.</p>\n<a '
-        b'href="http://alliance-primo.hosted.exlibrisgroup.com/primo_library/'
-        b'libweb/action/dlBasketGet.do?vid=UW&redirectTo=myAccount">'
-        b'Go to your account</a>')
-
     def test_get_account(self):
         account = get_account("javerage")
         self.assertEquals(account.next_due, date(2014, 5, 27))
@@ -30,7 +23,12 @@ class MyLibInfoTest(TestCase):
 
     def test_html_response(self):
         response = get_account_html("javerage")
-        self.assertEquals(response, self.DEFAULT_HTML)
+        self.assertEquals(response, (
+            b'<p>You have 7 items checked out.<br>\nYou have items '
+            b'due back on 2014-04-29.<br>\nYou don\'t owe any fines.</p>\n<a '
+            b'href="http://alliance-primo.hosted.exlibrisgroup.com/'
+            b'primo_library/libweb/action/dlBasketGet.do?vid=UW&redirectTo='
+            b'myAccount">Go to your account</a>'))
 
     def test_bad_json(self):
         self.assertRaises(Exception, get_account, "badjsonuser")
@@ -54,4 +52,9 @@ class MyLibInfoTest(TestCase):
 
     def test_with_timestamp(self):
         response = get_account_html('javerage', timestamp=1391122522900)
-        self.assertEquals(response, self.DEFAULT_HTML)
+        self.assertEquals(response, (
+            b'<p>You have 7 items checked out.<br>\n You have items '
+            b'due back on 2014-04-29.<br>\n You don\'t owe any fines.</p>\n '
+            b'<a href="http://alliance-primo.hosted.exlibrisgroup.com/'
+            b'primo_library/libweb/action/dlBasketGet.do?vid=UW&amp;'
+            b'redirectTo=myAccount">Go to your account</a>'))
