@@ -127,7 +127,8 @@ class SubjectGuideTest(TestCase):
         self.assertEquals(
             guide.guide_url,
             'http://guides.lib.uw.edu/friendly.php?s=research/math')
-        self.assertEquals(guide.faq_url, 'http://guides.lib.uw.edu/research/faq')
+        self.assertEquals(
+            guide.faq_url, 'http://guides.lib.uw.edu/research/faq')
         self.assertEquals(guide.is_default_guide, False)
         self.assertEquals(len(guide.libraries), 1)
         self.assertEquals(
