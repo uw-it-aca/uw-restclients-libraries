@@ -1,5 +1,5 @@
 """
-This is the interface for interacting with the UW Libraries Subject Guide
+This the interface for interacting with the UW Libraries Subject Guide
 Web Service.
 """
 
@@ -28,7 +28,7 @@ def get_subject_guide_for_section_params(
 
     quarter = quarter.upper()[:3]
 
-    url = '%s/%s/%s/%s/%s/%s/%s' % (
+    url = "{}/{}/{}/{}/{}/{}/{}".format(
         subject_guide_url_prefix, 'course', year, quarter,
         quote(curriculum_abbr.upper()), course_number, section_id.upper())
     headers = {'Accept': 'application/json'}
@@ -65,7 +65,7 @@ def get_default_subject_guide(campus='seattle'):
     Returns a default SubjectGuide model for the passed campus:
         seattle, bothell, tacoma
     """
-    url = '%s/%s/%s' % (subject_guide_url_prefix, 'defaultGuide', campus)
+    url = "{}/{}/{}".format(subject_guide_url_prefix, 'defaultGuide', campus)
     headers = {'Accept': 'application/json'}
 
     response = SubjectGuide_DAO().getURL(url, headers)
