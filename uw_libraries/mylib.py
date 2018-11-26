@@ -3,9 +3,10 @@ This is the interface for interacting with the UW Libraries Web Service.
 """
 
 from datetime import datetime
+from dateutil.parser import parse
 import json
 from logging import getLogger
-from dateutil.parser import parse
+from urllib.parse import urlencode
 from uw_libraries.dao import MyLib_DAO
 from uw_libraries.models import MyLibAccount
 from restclients_core.exceptions import DataFailureException
@@ -26,19 +27,18 @@ def _get_mylib_resource(url):
     if "User not found" in response_data:
         raise DataFailureException(url, 404, response_data)
 
-    logger.debug("%s ==data==> %s" % (url, response_data))
+    logger.debug("{} ==data==> {}".format(url, response_data))
     return response.data
 
 
 def _get_account(netid, timestamp=None, is_html=False):
-    url = "%s?id=%s" % (mylib_url_prefix, netid)
-
+    params = [("id", netid)]
     if timestamp is not None:
-        url += "&timestamp=%s" % timestamp
-
+        params.append(("timestamp", timestamp))
     if is_html:
-        url += "&style=html"
+        params.append(("style", "html"))
 
+    url = "{}?{}".format(mylib_url_prefix, urlencode(params))
     return _get_mylib_resource(url)
 
 

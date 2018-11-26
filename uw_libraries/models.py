@@ -1,3 +1,4 @@
+import json
 from restclients_core import models
 
 
@@ -60,6 +61,4 @@ class MyLibAccount(models.Model):
                 }
 
     def __str__(self):
-        return ("{next_due: %s, holds_ready: %d, fines: %.2f, "
-                "items_loaned: %d}") % (
-            self.next_due, self.holds_ready, self.fines, self.items_loaned)
+        return json.dumps(self.json_data())
