@@ -10,7 +10,7 @@ from uw_libraries.dao import SubjectGuide_DAO
 from uw_libraries.models import (
     SubjectGuide, CourseGuide, Library, Librarian)
 
-
+SubjectGuideDao = SubjectGuide_DAO()
 subject_guide_url_prefix = '/currics_db/api/v1/data'
 
 
@@ -33,7 +33,7 @@ def get_subject_guide_for_section_params(
         quote(curriculum_abbr.upper()), course_number, section_id.upper())
     headers = {'Accept': 'application/json'}
 
-    response = SubjectGuide_DAO().getURL(url, headers)
+    response = SubjectGuideDao.getURL(url, headers)
     response_data = str(response.data)
     if response.status != 200:
         raise DataFailureException(url, response.status, response_data)
@@ -68,7 +68,7 @@ def get_default_subject_guide(campus='seattle'):
     url = "{}/{}/{}".format(subject_guide_url_prefix, 'defaultGuide', campus)
     headers = {'Accept': 'application/json'}
 
-    response = SubjectGuide_DAO().getURL(url, headers)
+    response = SubjectGuideDao.getURL(url, headers)
 
     if response.status != 200:
         raise DataFailureException(url, response.status, response.data)

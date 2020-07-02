@@ -5,19 +5,17 @@ This is the interface for interacting with the UW Libraries Web Service.
 from datetime import datetime
 from dateutil.parser import parse
 import json
-from logging import getLogger
 from urllib.parse import urlencode
 from uw_libraries.dao import MyLib_DAO
 from uw_libraries.models import MyLibAccount
 from restclients_core.exceptions import DataFailureException
 
-
+MyLibDao = MyLib_DAO()
 mylib_url_prefix = '/mylibinfo/v1/'
-logger = getLogger(__name__)
 
 
 def _get_mylib_resource(url):
-    response = MyLib_DAO().getURL(url, {})
+    response = MyLibDao.getURL(url, {})
 
     response_data = str(response.data)
     if response.status != 200:
@@ -27,7 +25,6 @@ def _get_mylib_resource(url):
     if "User not found" in response_data:
         raise DataFailureException(url, 404, response_data)
 
-    logger.debug("{} ==data==> {}".format(url, response_data))
     return response.data
 
 
@@ -64,8 +61,7 @@ def _account_from_json(body):
         account_data = json.loads(body)
     except Exception as ex:
         raise Exception(
-            "Unable to parse library data: {}.  Exception: {}".format(
-                body, str(ex)))
+            "Unable to parse mylibinfo: {}. {}".format(body, ex))
     account = MyLibAccount()
     account.fines = account_data["fines"]
     account.holds_ready = account_data["holds_ready"]
