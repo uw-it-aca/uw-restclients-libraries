@@ -41,7 +41,7 @@ class MyLibAccount(models.Model):
     holds_ready = models.IntegerField()
     fines = models.DecimalField(max_digits=8, decimal_places=2)
     items_loaned = models.IntegerField()
-    next_due = models.DateField(null=True)
+    next_due = models.DateTimeField(null=True)
 
     def get_next_due_date_str(self):
         """
@@ -49,11 +49,10 @@ class MyLibAccount(models.Model):
         If the next_due is None, return None.
         """
         if self.next_due is not None:
-            return str(self.next_due)
+            return self.next_due.isoformat()  # 2020-07-15T02:00:00+00:00
         return None
 
-    def json_data(self,
-                  use_abbr_week_month_day_format=False):
+    def json_data(self):
         return {'holds_ready': self.holds_ready,
                 'fines': self.fines,
                 'items_loaned': self.items_loaned,
