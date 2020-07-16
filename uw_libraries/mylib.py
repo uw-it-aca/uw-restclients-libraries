@@ -66,8 +66,8 @@ def _account_from_json(body):
     account.fines = account_data["fines"]
     account.holds_ready = account_data["holds_ready"]
     account.items_loaned = account_data["items_loaned"]
-    if account_data.get("next_due") is None:
+    if account_data.get("next_due_utc") is None:
         account.next_due = None
     else:
-        account.next_due = parse(account_data["next_due"]).date()
+        account.next_due = parse(account_data["next_due_utc"]).date()
     return account
