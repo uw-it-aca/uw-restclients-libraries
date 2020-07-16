@@ -41,7 +41,7 @@ class MyLibAccount(models.Model):
     holds_ready = models.IntegerField()
     fines = models.DecimalField(max_digits=8, decimal_places=2)
     items_loaned = models.IntegerField()
-    next_due = models.DateField(null=True)
+    next_due = models.DateTimeField(null=True)
 
     def get_next_due_date_str(self):
         """

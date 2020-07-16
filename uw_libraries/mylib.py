@@ -69,5 +69,5 @@ def _account_from_json(body):
     if account_data.get("next_due_utc") is None:
         account.next_due = None
     else:
-        account.next_due = parse(account_data["next_due_utc"]).date()
+        account.next_due = parse(account_data["next_due_utc"])
     return account

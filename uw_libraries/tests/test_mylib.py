@@ -9,18 +9,18 @@ from datetime import date
 class MyLibInfoTest(TestCase):
     def test_get_account(self):
         account = get_account("javerage")
-        self.assertEquals(account.next_due, date(2014, 5, 27))
         self.assertEquals(account.holds_ready, 1)
         self.assertEquals(account.fines, 5.35)
         self.assertEquals(account.items_loaned, 3)
-        self.assertEquals(account.get_next_due_date_str(), "2014-05-27")
+        self.assertEquals(account.get_next_due_date_str(),
+                          "2014-05-27 02:00:00+00:00")
         self.assertIsNotNone(str(account))
         self.assertEquals(
             account.json_data(),
             {'holds_ready': 1,
              'fines': 5.35,
              'items_loaned': 3,
-             'next_due': '2014-05-27'})
+             'next_due': '2014-05-27 02:00:00+00:00'})
 
         account = get_account("jnewstudent")
         self.assertIsNone(account.next_due)
