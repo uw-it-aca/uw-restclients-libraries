@@ -49,7 +49,7 @@ class MyLibAccount(models.Model):
         If the next_due is None, return None.
         """
         if self.next_due is not None:
-            return str(self.next_due)
+            return self.next_due.isoformat()  # 2020-07-15T02:00:00+00:00
         return None
 
     def json_data(self,
