@@ -52,8 +52,7 @@ class MyLibAccount(models.Model):
             return self.next_due.isoformat()  # 2020-07-15T02:00:00+00:00
         return None
 
-    def json_data(self,
-                  use_abbr_week_month_day_format=False):
+    def json_data(self):
         return {'holds_ready': self.holds_ready,
                 'fines': self.fines,
                 'items_loaned': self.items_loaned,
