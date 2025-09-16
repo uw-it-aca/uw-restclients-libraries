@@ -1,24 +1,24 @@
-# Copyright 2024 UW-IT, University of Washington
+# Copyright 2025 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
 from unittest import TestCase
 from uw_libraries.mylib import get_account, get_account_html
 from uw_libraries.util import fdao_mylib_override
 from restclients_core.exceptions import DataFailureException
-from datetime import date
 
 
 @fdao_mylib_override
 class MyLibInfoTest(TestCase):
     def test_get_account(self):
         account = get_account("javerage")
-        self.assertEquals(account.holds_ready, 1)
-        self.assertEquals(account.fines, 5.35)
-        self.assertEquals(account.items_loaned, 3)
-        self.assertEquals(account.get_next_due_date_str(),
-                          "2020-10-15T02:00:00+00:00")
+        self.assertEqual(account.holds_ready, 1)
+        self.assertEqual(account.fines, 5.35)
+        self.assertEqual(account.items_loaned, 3)
+        self.assertEqual(
+            account.get_next_due_date_str(),
+            "2020-10-15T02:00:00+00:00")
         self.assertIsNotNone(str(account))
-        self.assertEquals(
+        self.assertEqual(
             account.json_data(),
             {'holds_ready': 1,
              'fines': 5.35,
@@ -27,13 +27,13 @@ class MyLibInfoTest(TestCase):
 
         account = get_account("jnewstudent")
         self.assertIsNone(account.next_due)
-        self.assertEquals(account.holds_ready, 0)
-        self.assertEquals(account.fines, 0.0)
-        self.assertEquals(account.items_loaned, 0)
+        self.assertEqual(account.holds_ready, 0)
+        self.assertEqual(account.fines, 0.0)
+        self.assertEqual(account.items_loaned, 0)
 
     def test_html_response(self):
         response = get_account_html("javerage")
-        self.assertEquals(response, (
+        self.assertEqual(response, (
             b'<p>You have 7 items checked out.<br>\nYou have items '
             b'due back on 2014-04-29.<br>\nYou don\'t owe any fines.</p>\n<a '
             b'href="http://alliance-primo.hosted.exlibrisgroup.com/'
@@ -62,7 +62,7 @@ class MyLibInfoTest(TestCase):
 
     def test_with_timestamp(self):
         response = get_account_html('javerage', timestamp=1391122522900)
-        self.assertEquals(response, (
+        self.assertEqual(response, (
             b'<p>You have 7 items checked out.<br>\n You have items '
             b'due back on 2014-04-29.<br>\n You don\'t owe any fines.</p>\n '
             b'<a href="http://alliance-primo.hosted.exlibrisgroup.com/'
