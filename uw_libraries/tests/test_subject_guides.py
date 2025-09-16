@@ -30,7 +30,7 @@ class SubjectGuideTest(TestCase):
                 year=1990, quarter='aut', curriculum_abbr='A B&C',
                 course_number='101', section_id='a')
         except DataFailureException as ex:
-            self.assertEquals(
+            self.assertEqual(
                 ex.url,
                 '/currics_db/api/v1/data/course/1990/AUT/A%20B%26C/101/A',
                 'Quoted curriculum abbr')
@@ -40,38 +40,38 @@ class SubjectGuideTest(TestCase):
             year=2015, quarter='aut', curriculum_abbr='MATH',
             course_number='309', section_id='A')
 
-        self.assertEquals(guide.discipline, 'Mathematics')
-        self.assertEquals(
+        self.assertEqual(guide.discipline, 'Mathematics')
+        self.assertEqual(
             guide.contact_url, 'http://www.lib.washington.edu/about/contact')
-        self.assertEquals(
+        self.assertEqual(
             guide.find_librarian_url,
             'http://guides.lib.uw.edu/research/subject-librarians')
-        self.assertEquals(
+        self.assertEqual(
             guide.guide_url,
             'http://guides.lib.uw.edu/friendly.php?s=research/math')
-        self.assertEquals(
+        self.assertEqual(
             guide.faq_url, 'http://guides.lib.uw.edu/research/faq')
-        self.assertEquals(guide.is_default_guide, False)
-        self.assertEquals(len(guide.libraries), 1)
-        self.assertEquals(
+        self.assertEqual(guide.is_default_guide, False)
+        self.assertEqual(len(guide.libraries), 1)
+        self.assertEqual(
             guide.libraries[0].name, 'Mathematics Research Library')
-        self.assertEquals(
+        self.assertEqual(
             guide.libraries[0].url, 'http://www.lib.washington.edu/math')
-        self.assertEquals(len(guide.librarians), 2)
-        self.assertEquals(guide.librarians[0].email, 'javerage@uw.edu')
-        self.assertEquals(guide.librarians[0].name, 'J Average')
-        self.assertEquals(
+        self.assertEqual(len(guide.librarians), 2)
+        self.assertEqual(guide.librarians[0].email, 'javerage@uw.edu')
+        self.assertEqual(guide.librarians[0].name, 'J Average')
+        self.assertEqual(
             guide.librarians[0].url,
             'http://guides.lib.washington.edu/Javerage')
-        self.assertEquals(guide.librarians[1].email, 'baverage@uw.edu')
-        self.assertEquals(guide.librarians[1].name, 'B Average')
-        self.assertEquals(
+        self.assertEqual(guide.librarians[1].email, 'baverage@uw.edu')
+        self.assertEqual(guide.librarians[1].name, 'B Average')
+        self.assertEqual(
             guide.librarians[1].url,
             'http://guides.lib.washington.edu/Baverage')
-        self.assertEquals(
+        self.assertEqual(
             guide.course_guide.guide_url,
             'http://guides.lib.uw.edu/seattle/math307smith')
-        self.assertEquals(
+        self.assertEqual(
             guide.course_guide.guide_text,
             'MATH 307: Introduction To Differential Equations (Smith)')
 
@@ -82,38 +82,38 @@ class SubjectGuideTest(TestCase):
 
         guide = get_subject_guide_for_section(section)
 
-        self.assertEquals(guide.discipline, 'Mathematics')
-        self.assertEquals(
+        self.assertEqual(guide.discipline, 'Mathematics')
+        self.assertEqual(
             guide.contact_url, 'http://www.lib.washington.edu/about/contact')
-        self.assertEquals(
+        self.assertEqual(
             guide.find_librarian_url,
             'http://guides.lib.uw.edu/research/subject-librarians')
-        self.assertEquals(
+        self.assertEqual(
             guide.guide_url,
             'http://guides.lib.uw.edu/friendly.php?s=research/math')
-        self.assertEquals(
+        self.assertEqual(
             guide.faq_url, 'http://guides.lib.uw.edu/research/faq')
-        self.assertEquals(guide.is_default_guide, False)
-        self.assertEquals(len(guide.libraries), 1)
-        self.assertEquals(
+        self.assertEqual(guide.is_default_guide, False)
+        self.assertEqual(len(guide.libraries), 1)
+        self.assertEqual(
             guide.libraries[0].name, 'Mathematics Research Library')
-        self.assertEquals(
+        self.assertEqual(
             guide.libraries[0].url, 'http://www.lib.washington.edu/math')
-        self.assertEquals(len(guide.librarians), 2)
-        self.assertEquals(guide.librarians[0].email, 'javerage@uw.edu')
-        self.assertEquals(guide.librarians[0].name, 'J Average')
-        self.assertEquals(
+        self.assertEqual(len(guide.librarians), 2)
+        self.assertEqual(guide.librarians[0].email, 'javerage@uw.edu')
+        self.assertEqual(guide.librarians[0].name, 'J Average')
+        self.assertEqual(
             guide.librarians[0].url,
             'http://guides.lib.washington.edu/Javerage')
-        self.assertEquals(guide.librarians[1].email, 'baverage@uw.edu')
-        self.assertEquals(guide.librarians[1].name, 'B Average')
-        self.assertEquals(
+        self.assertEqual(guide.librarians[1].email, 'baverage@uw.edu')
+        self.assertEqual(guide.librarians[1].name, 'B Average')
+        self.assertEqual(
             guide.librarians[1].url,
             'http://guides.lib.washington.edu/Baverage')
-        self.assertEquals(
+        self.assertEqual(
             guide.course_guide.guide_url,
             'http://guides.lib.uw.edu/seattle/math307smith')
-        self.assertEquals(
+        self.assertEqual(
             guide.course_guide.guide_text,
             'MATH 307: Introduction To Differential Equations (Smith)')
 
@@ -121,55 +121,55 @@ class SubjectGuideTest(TestCase):
         sis_id = '2015-autumn-MATH-309-A'
         guide = get_subject_guide_for_canvas_course_sis_id(sis_id)
 
-        self.assertEquals(guide.discipline, 'Mathematics')
-        self.assertEquals(
+        self.assertEqual(guide.discipline, 'Mathematics')
+        self.assertEqual(
             guide.contact_url, 'http://www.lib.washington.edu/about/contact')
-        self.assertEquals(
+        self.assertEqual(
             guide.find_librarian_url,
             'http://guides.lib.uw.edu/research/subject-librarians')
-        self.assertEquals(
+        self.assertEqual(
             guide.guide_url,
             'http://guides.lib.uw.edu/friendly.php?s=research/math')
-        self.assertEquals(
+        self.assertEqual(
             guide.faq_url, 'http://guides.lib.uw.edu/research/faq')
-        self.assertEquals(guide.is_default_guide, False)
-        self.assertEquals(len(guide.libraries), 1)
-        self.assertEquals(
+        self.assertEqual(guide.is_default_guide, False)
+        self.assertEqual(len(guide.libraries), 1)
+        self.assertEqual(
             guide.libraries[0].name, 'Mathematics Research Library')
-        self.assertEquals(
+        self.assertEqual(
             guide.libraries[0].url, 'http://www.lib.washington.edu/math')
-        self.assertEquals(len(guide.librarians), 2)
-        self.assertEquals(guide.librarians[0].email, 'javerage@uw.edu')
-        self.assertEquals(guide.librarians[0].name, 'J Average')
-        self.assertEquals(
+        self.assertEqual(len(guide.librarians), 2)
+        self.assertEqual(guide.librarians[0].email, 'javerage@uw.edu')
+        self.assertEqual(guide.librarians[0].name, 'J Average')
+        self.assertEqual(
             guide.librarians[0].url,
             'http://guides.lib.washington.edu/Javerage')
-        self.assertEquals(guide.librarians[1].email, 'baverage@uw.edu')
-        self.assertEquals(guide.librarians[1].name, 'B Average')
-        self.assertEquals(
+        self.assertEqual(guide.librarians[1].email, 'baverage@uw.edu')
+        self.assertEqual(guide.librarians[1].name, 'B Average')
+        self.assertEqual(
             guide.librarians[1].url,
             'http://guides.lib.washington.edu/Baverage')
-        self.assertEquals(
+        self.assertEqual(
             guide.course_guide.guide_url,
             'http://guides.lib.uw.edu/seattle/math307smith')
-        self.assertEquals(
+        self.assertEqual(
             guide.course_guide.guide_text,
             'MATH 307: Introduction To Differential Equations (Smith)')
 
     def test_default_subject_guide(self):
         guide = get_default_subject_guide(campus='tacoma')
 
-        self.assertEquals(guide.discipline, 'your discipline')
-        self.assertEquals(
+        self.assertEqual(guide.discipline, 'your discipline')
+        self.assertEqual(
             guide.contact_url, 'http://www.tacoma.uw.edu/library/contact-us')
-        self.assertEquals(
+        self.assertEqual(
             guide.find_librarian_url,
             'http://www.tacoma.uw.edu/library/subject-librarians')
-        self.assertEquals(guide.guide_url, 'http://guides.lib.uw.edu/tacoma')
-        self.assertEquals(guide.faq_url, 'http://guides.lib.uw.edu/research')
-        self.assertEquals(guide.is_default_guide, True)
-        self.assertEquals(guide.default_guide_campus, 'tacoma')
-        self.assertEquals(len(guide.libraries), 1)
-        self.assertEquals(guide.libraries[0].name, 'UW Tacoma Library')
-        self.assertEquals(
+        self.assertEqual(guide.guide_url, 'http://guides.lib.uw.edu/tacoma')
+        self.assertEqual(guide.faq_url, 'http://guides.lib.uw.edu/research')
+        self.assertEqual(guide.is_default_guide, True)
+        self.assertEqual(guide.default_guide_campus, 'tacoma')
+        self.assertEqual(len(guide.libraries), 1)
+        self.assertEqual(guide.libraries[0].name, 'UW Tacoma Library')
+        self.assertEqual(
             guide.libraries[0].url, 'http://www.tacoma.uw.edu/library')
