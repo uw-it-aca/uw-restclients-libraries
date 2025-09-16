@@ -14,8 +14,9 @@ class MyLibInfoTest(TestCase):
         self.assertEqual(account.holds_ready, 1)
         self.assertEqual(account.fines, 5.35)
         self.assertEqual(account.items_loaned, 3)
-        self.assertEqual(account.get_next_due_date_str(),
-                          "2020-10-15T02:00:00+00:00")
+        self.assertEqual(
+            account.get_next_due_date_str(),
+            "2020-10-15T02:00:00+00:00")
         self.assertIsNotNone(str(account))
         self.assertEqual(
             account.json_data(),
